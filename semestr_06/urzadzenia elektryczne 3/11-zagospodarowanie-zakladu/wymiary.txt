@@ -1,0 +1,14 @@
+Odział nr 1 wymiary	25na18
+Odział nr 2 wymiary	20na20
+Odział nr 3 wymiary	22na20
+Odział nr 4 wymiary	15na20
+
+Stacaja oddziałowa S01 	25na25
+Stacaja oddziałowa S02 	25na25
+
+
+
+długoś kabla WLZ1	80m
+
+
+wymiary całości		250na200
