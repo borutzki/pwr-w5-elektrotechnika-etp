@@ -1,0 +1,484 @@
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void){
+DDRA=0xff;
+uint8_t i, diody[]={1,2,4,8,16,32,64,128};
+while(1){
+for(i=0;i<8;i++){
+_delay_ms(2000);
+PORTA=~diody[i];}
+}}
+
+-------------------------------------------------------------------
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void)
+
+{
+int i;
+DDRA=0xff;
+
+while(1)
+{
+for(i=0;i<8;i++)
+{
+PORTA=(1<<i);
+
+_delay_ms(2000);
+}
+for(i=8;i>0;i--)
+{
+PORTA=(1<<i);
+
+_delay_ms(2000);
+}
+}
+return 0;
+}
+
+p³ywa od prawej do lewej
+
+-------------------------------------------------------------------------
+
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void)
+
+{
+int i;
+
+DDRA=0xff;
+
+	while(1)
+{
+		PORTA=255;
+			for(i=0;i<4;i++)
+{
+				PORTA=~((1<<i)|(1<<7-i));
+
+					_delay_ms(2000);
+}
+}
+return 0;
+}
+diody do srodka
+
+
+-----------------------------------------------------------------------------------
+
+
+#include <avr/io.h>
+
+int main(void)
+{
+DDRD = 255;
+ADCSRA|=(1<<ADEN);
+ADMUX|=(1<<MUX1);
+ADCSRA|=(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0);
+ADMUX|=(1<<ADLAR); //ROZD 8 BITÓW
+ADCSRA|=(1<<ADATE); //TRYB CI¥G£EJ KONWERSJI
+ADCSRA^=(1<<ADSC);
+
+	for(;;)
+	{
+	PORTD=~ADCH;
+	}
+}
+
+POTENCJOMETR DIODY NAPIECIE
+
+
+
+-----------------------------------------------------------------------------------------
+
+6CW
+
+#include <avr/io.h>
+#include <util/delay.h>
+
+#define przyc0 (1<<PB0)
+#define przyc1 (1<<PB1)
+#define przyc2 (1<<PB2)
+
+uint8_t klaw_wcis(uint8_t klawisz)
+
+{
+	if(!(PINB & klawisz))
+
+	{
+
+		_delay_ms(60);
+		if(!(PINB & klawisz)) return 1;
+
+	}
+	return 0;
+
+}
+
+int main(void)
+
+{
+DDRD=255;
+DDRB &=~(przyc0|przyc1|przyc2);
+PORTB|=(przyc0|przyc1|przyc2);
+
+	ADMUX|=(1<<ADLAR);
+	ADCSRA|=(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0);
+	ADCSRA|=(1<<ADEN); //ROZD 8 BITÓW
+	ADCSRA|=~(0<<ADATE); 
+
+	while(1)
+	{
+		if(klaw_wcis( przyc0 ))
+		{
+			ADMUX&=~(1<<MUX2);
+		}
+
+		if (klaw_wcis( przyc1 ))
+		{
+			ADMUX|=(1<<MUX2);
+		}
+
+		if(klaw_wcis(przyc2))
+		{
+		ADCSRA^=(1<<ADSC);
+		if(ADCSRA&(1<<ADSC));
+		{
+		PORTD=ADCH;
+		}
+	}
+	}
+	}
+
+
+
+
+---------------------------------------------------------------------------------
+
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+
+volatile uint8_t t_1s;
+
+int main()
+{
+DDRA = 0xFF;
+PORTA = 0x00;
+
+
+TIMSK |=(1<<OCIE0);
+TIMSK |=(1<<TOIE0);
+TCCR0 |=(1<<CS00);
+TCCR0 |=((0<<CS01)|(1<<CS02));
+TCCR0 |=((1<<WGM01)|(0<<WGM00));
+
+OCR0 = 52;
+TCNT0 = 0x00;
+sei();
+
+	while(1)
+	{
+		if (t_1s==1)
+		{
+		PORTA=~PORTA;
+		t_1s=0;
+		}
+	}
+}
+static uint16_t li;
+ISR(TIMER0_COMP_vect)
+{
+	if (li==300)
+		{t_1s = 1;
+		li=0;
+		}
+		li++;
+}	
+static uint8_t lic;	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
+-----------------------------------------------------------------------------------------------------
+
+MODULACJA PWM
+
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+volatile uint8_t t_1s;
+#define przyc0 (1<<PD0)
+#define przyc1 (1<<PD1)
+#define przyc2 (1<<PD2)
+#define przyc3 (1<<PD3)
+#define przyc4 (1<<PD4)
+uint8_t klaw_wcis(uint8_t klawisz)
+
+//volatile uint8_t t_1s;
+
+{
+	if(!(PIND & klawisz))
+
+	{
+
+		_delay_ms(60);
+		if(!(PIND & klawisz)) return 1;
+
+	}
+	return 0;
+
+}
+
+int main()
+{
+DDRD &=~(przyc0|przyc1|przyc2|przyc3|przyc4);
+PORTD|=(przyc0|przyc1|przyc2|przyc3|przyc4);
+
+DDRC = 0XFF;
+DDRA = 0xFF;
+PORTA = 0x00;
+DDRB=(1<<PB3);
+
+
+
+TCCR0 |=((0<<CS00)|(1<<CS02));
+TCCR0 |=((0<<WGM01)|(1<<WGM00));
+TCCR0 |=(1<<COM01);
+
+OCR0 = 128;
+TCNT0 = 0x00;
+sei();
+
+	while(1)
+	{
+		if (t_1s==1) 
+		{
+		PORTA=~PORTA;
+		t_1s=0;
+		}
+	
+		if(klaw_wcis( przyc0 ))
+		{
+			OCR0=64;
+		}
+
+		if (klaw_wcis( przyc1 ))
+		{
+			OCR0=100;
+		}
+
+		if(klaw_wcis(przyc2))
+		{
+		OCR0=40;
+		}
+		if(klaw_wcis(przyc3))
+		{
+		OCR0++;
+		_delay_ms(20);
+		}
+		if(klaw_wcis(przyc4))
+		{
+		OCR0--;
+		_delay_ms(20);
+		}
+	}
+}
+static uint16_t li;
+ISR(TIMER0_COMP_vect)
+{
+	if (li==300)
+		{t_1s = 1;
+		li=0;
+		}
+		li++;
+}	
+static uint8_t lic;	      
+
+
+---------------------------------------------------------------------------------------------------------------
+
+
+#include<avr/io.h>
+#include<util/delay.h>
+
+#define LCD PORTB
+#define E 3
+#define RS 2
+#define SET_E LCD |= _BV(E)
+#define CLR_E LCD &= ~_BV(E)
+#define SET_RS LCD |= _BV(RS)
+#define CLR_RS LCD &= ~_BV(RS)
+
+
+int main(void)
+{
+
+DDRB = 0xFF;
+DDRD = 0XFC;
+PORTB = 0xFF;
+PORTD = 0XF7;
+
+
+lcd_init();
+write_text("PWr I291234567891011121314151617");
+write_command(0xC0);
+write_text("PWr I291234567891011121314151617");
+
+while(1);
+return 0;
+}
+
+void lcd_init(void){
+
+_delay_ms(15);
+CLR_E;
+CLR_RS;
+char i;
+for(i=0;i<3;i++){
+	SET_E;
+	LCD &= 0x3F;
+	CLR_E;
+	_delay_ms(5);
+}
+SET_E;
+LCD &= 0x2E;
+CLR_E;
+_delay_ms(5);
+write_command(0x28);
+write_command(0x08);
+write_command(0x01);
+write_command(0x06);
+write_command(0x0C);
+}
+
+void write_to_lcd(char x){
+
+SET_E;
+LCD = ((LCD & 0x0F) | (x & 0xF0));
+CLR_E;
+_delay_ms(5);
+SET_E;
+LCD = ((LCD & 0x0F) | ((x & 0x0F) <<4 ));
+CLR_E;
+_delay_ms(5);
+}
+
+void write_command(char x){
+
+CLR_RS;
+write_to_lcd(x);
+}
+
+void write_char(char x){
+
+SET_RS;
+write_to_lcd(x);
+}
+
+void write_text(char * s){
+while(*s){
+	write_char(*s);
+	s++;
+}
+}
+---------------------------------------------------------------------------------------
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+volatile uint8_t t_1s;
+#define przyc0 (1<<PA0)
+#define przyc1 (1<<PA1)
+#define przyc2 (1<<PA2)
+#define przyc3 (1<<PA3)
+#define przyc4 (1<<PA4)
+uint8_t klaw_wcis(uint8_t klawisz)
+
+//volatile uint8_t t_1s;
+
+{
+	if(!(PINA & klawisz))
+
+	{
+
+		_delay_ms(60);
+		if(!(PINA & klawisz)) return 1;
+
+	}
+	return 0;
+
+}
+
+int main()
+{
+DDRA &=~(przyc0|przyc1|przyc2|przyc3|przyc4);
+PORTA|=(przyc0|przyc1|przyc2|przyc3|przyc4);
+
+DDRC = 0XFF;
+DDRB = 0xFF;
+PORTB = 0x00;
+DDRA=(1<<PB3);
+
+
+
+TCCR0 |=((0<<CS00)|(1<<CS02));
+TCCR0 |=((0<<WGM01)|(1<<WGM00));
+TCCR0 |=(1<<COM01);
+
+OCR0 = 128;
+TCNT0 = 0x00;
+sei();
+
+	while(1)
+	{
+		if (t_1s==1) 
+		{
+		PORTA=~PORTA;
+		t_1s=0;
+		}
+	
+		if(klaw_wcis( przyc0 ))
+		{
+			OCR0=64;
+		}
+
+		if (klaw_wcis( przyc1 ))
+		{
+			OCR0=70;
+		}
+
+		if(klaw_wcis(przyc2))
+		{
+		OCR0=0;
+		}
+		if(klaw_wcis(przyc3))
+		{
+		OCR0++;
+		_delay_ms(20);
+		}
+		if(klaw_wcis(przyc4))
+		{
+		OCR0--;
+		_delay_ms(20);
+		}
+	}
+}
+static uint16_t li;
+ISR(TIMER0_COMP_vect)
+{
+	if (li==300)
+		{t_1s = 1;
+		li=0;
+		}
+		li++;
+}	
+static uint8_t lic;	      
+
+
+
+STEROWANIE SILNIKIEM KROKOWYM
+
+------------------------------------------------------------------------------
