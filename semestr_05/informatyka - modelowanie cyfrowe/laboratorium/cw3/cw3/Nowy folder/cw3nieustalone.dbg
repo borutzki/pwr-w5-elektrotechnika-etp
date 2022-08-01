@@ -1,0 +1,39 @@
+  GUTATP  connects diagnostic file.  IPRSUP = -1  in  STARTUP  suppresses such o
+ utput (see Apr, 96, newsletter).
+  Begin LFLUSH by setting L6HAND = -99.
+ Top of OVER1.  KILL, KPARAM, NCHAIN, IPRSNO =  1111   -61     1     1
+ OVER1 initialize.  NUMDCD, KASEND, KCARD2 = -8765     5     0
+                    NUMRUN, L6DISK =     0 -2244
+ OVER1 has LINUSE =  0   Define SLASH =\
+ OVER1 tests KPARAM, NUMRUN =         -61           0
+       CIM132(1:30) =C:\Users\student\Desktop\kbo\c
+       Length LENCIM =          51
+  LUNDAT is not yet connected to input data.
+   Connect now (next),  as READONLY.  LENSPY =          29
+  Successful connection of input data.
+  DIMENS builds  BUFF77 =
+ C:\EEUG16\IntelF_ATP\listsize.dat                                              
+  
+         length  LENPTH =          21
+  OVER1 checks  LSTAT(17) =           0
+  Done class 6 (SOURCE).  Next try 12 (UM).
+  Done class 6 (SOURCE).  Next try 12 (UM).
+  Exit  LOWCAS  with  TEXT(1:K2) =
+ c:\users\student\desktop\kbo\cw3\cw3nieustalone.pl4
+  SYSDEP checks KPARAM =          -1
+  SYSDEP shortens .PL4 name.  LEN32L =          51
+  A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U   V   W   X   Y   Z
+  1 10 14 28 31 33 39 41 44 47 48 49 55 62 69 73 79 79 85 92 99 106 108 108 109 109 112
+  Ready to write date/time.  KY =           2
+  Dummy  ENTRY ENDPLT  in  SUBROUTINE EXTRA.
+  Top reinitializes.   Set  LISBEG = -22666.
+  End.   M4PLOT, NOTMAX, KFILE5, LOCKBR =           2           0           0
+           0
+ Top of OVER1.  KILL, KPARAM, NCHAIN, IPRSNO =     0    -1     1     1
+  OVER1 after EMTSPY.  LSTAT(17) =       -9999
+  S.N. 4872.  L4BYTE, L4HAND =           0           0
+  STOPTP checks  NOPOST, KSHOWP =           0           0
+              KPARAM, L6DISK =          -1       -2244
+              KILL, L6DISK =       -9999       -2244
+  Below S.N. 6382 of STOPTP,  ready for TIME_OUT.
+  Two or more HP-GL plots?  KNTHPG =      0
