@@ -1,0 +1,47 @@
+#include<stdio.h>
+#include <math.h>
+
+int main()
+{
+    int n, R; 
+    float L1, L2, L3, Z;
+	printf("\nPodaj n od 1 do 3: ");
+	scanf("%d",&n);
+	if(n=1)
+	{
+		printf("\nPodaj R: ");
+		scanf("%d",&R);
+		printf("Podaj L1: ");
+		scanf("%f",&L1);
+		Z=R+L1;
+		printf("\nZ=%f",Z);
+	}
+	else if(n=2)
+	{
+
+		printf("\nPodaj R: ");
+		scanf("%d",&R);
+		printf("\nPodaj L1: ");
+		scanf("%f",&L1);
+		printf("\nPodaj L2: ");
+		scanf("%f",&L2);
+		Z=R+(L1*L2/(L1+L2));
+		printf("\nZ=%f",Z);
+	}
+	else if(n=3)
+	{
+
+		printf("\nPodaj R: ");
+		scanf("%d",&R);
+		printf("\nPodaj L1: ");
+		scanf("%f",&L1);
+		printf("\nPodaj L2: ");
+		scanf("%f",&L2);
+		printf("\nPodaj L3: ");
+		scanf("%f",&L3);
+		Z=R+(L1*L2*L3/(L1+L2+L3));
+		printf("\nZ=%f",Z);
+	}
+system("pause");
+return 0;
+}
