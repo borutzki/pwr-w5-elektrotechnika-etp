@@ -65,4 +65,4 @@ https://borutzki.wordpress.com/
 https://www.linkedin.com/in/kacper-b-278b55136/
 
 ## Kupienie mi kawy :) 
-<a href="https://www.buymeacoffee.com/kborucki" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<a href="https://buycoffee.to/borutzki" target="_blank"><img src="https://buycoffee.to/btn/buycoffeeto-btn-primary.svg" style="width: 200px" alt="Postaw mi kawę na buycoffee.to"></a>
